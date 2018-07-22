@@ -71,7 +71,7 @@ function compareStringsLocale(a, b) {
 
 let bs = new BinarySearch({  // <===============
     compareFunc: compareStringsLocale,
-    linearSearchLimit: 64
+    linearSearchLimit: 20
 });
 
 fs.readdir(path, function(err, names) {
