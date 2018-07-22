@@ -49,6 +49,21 @@ let result = bs.search(list, searchEl);
 
 // it's as simple as that
 
+
+// you can alse set the options as follow (one or multiple ones, only what you precise get changed)
+bs.setOptions({
+    compareFunc: function (searchEL, listEl) {
+        //...
+    },
+    forceBinary: true
+}); // here we changed to properties only
+
+
+// you can also use  this.setCopareFunc to set the compare func, if it's more readable.
+
+bs.setCompareFunc(function (searchEl, listEl) {
+    //...
+})
 ```
 
 

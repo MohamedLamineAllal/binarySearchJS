@@ -1,57 +1,72 @@
-
-    /**
-     *  this function do a binnary search on a list, and return first element where the searched Element is smaller or equal, (we have an ordered list and if we insert the searched element there, it will be the right ordered place (we need that when we are not searching for equality (finding an element following a creterion))). (you define your order function) (if you don't then it will default to the normal comparison operator < > 0)
-     * 
-     * the compareFunc should return 0 if the elements are equal, return a negative number if the the first element is bigger then second, and a negative number if it's the other way.    note that the check function take two parameter that refer to the two elements being compared.
-     * 
-     * 
-     * 
-     * about the return format:
-     * {
-     *  index: ,=> the search element position if found, or where to insert the element in if not there (the new eL Take that index, and the old one get pushed forward with all the one that follow) (first position where the searchEl is smaller or equal to that position el),
-     *  el: , => the element itself, (because the searchEl can be not an element, and that's it the case in a wide type of applications, and can be an element if it's just about finding the index within the list.  [you build up the compareFunc, and you handle things in the way you like])
-     *  equale:  => if it's equale or not (false/true)
-     * }
-     * 
-     * 
-*/
+/**
+ *  this function do a binnary search on a list, and return first element where the searched Element is smaller or equal, (we have an ordered list and if we insert the searched element there, it will be the right ordered place (we need that when we are not searching for equality (finding an element following a creterion))). (you define your order function) (if you don't then it will default to the normal comparison operator < > 0)
+ * 
+ * the compareFunc should return 0 if the elements are equal, return a negative number if the the first element is bigger then second, and a negative number if it's the other way.    note that the check function take two parameter that refer to the two elements being compared.
+ * 
+ * 
+ * 
+ * about the return format:
+ * {
+ *  index: ,=> the search element position if found, or where to insert the element in if not there (the new eL Take that index, and the old one get pushed forward with all the one that follow) (first position where the searchEl is smaller or equal to that position el),
+ *  el: , => the element itself, (because the searchEl can be not an element, and that's it the case in a wide type of applications, and can be an element if it's just about finding the index within the list.  [you build up the compareFunc, and you handle things in the way you like])
+ *  equale:  => if it's equale or not (false/true)
+ * }
+ * 
+ * 
+ */
 
 
 var BinarySearch = function (options) {
     var compareFunc,
         linearSearchLimit = 10,
-        forceBinary = false;
+        forceBinary = false,
+        firstTimeRun = true;
 
-    if(options && options.compareFunc) {
-        compareFunc = options.compareFunc;
-    } else {
-        compareFunc = function (_searchEl, listEl) {
-            if (_searchEl > listEl) return 1;
-            else if (_searchEl < listEl) return -1;
-            else return 0;
-        };
+    function init(options) {
+        if (options && options.compareFunc) {
+            compareFunc = options.compareFunc;
+        } else {
+            if(firstTimeRun) {
+                compareFunc = function (_searchEl, listEl) {
+                    if (_searchEl > listEl) return 1;
+                    else if (_searchEl < listEl) return -1;
+                    else return 0;
+                };
+            }
+        }
+
+        if (options && options.linearSearchLimit) linearSearchLimit = options.linearSearchLimit;
+
+        if (options && options.forceBinary) forceBinary = options.forceBinary;
+
+        firstTimeRun = false;
     }
 
-    if(options && options.linearSearchLimit) linearSearchLimit = options.linearSearchLimit;
-
-    if(options && options.forceBinary) forceBinary = options.forceBinary;
 
     this.search = function (list, searchEl, start, end) {
-        if(!forceBinary && list.length <= linearSearchLimit) {
+        if (!forceBinary && list.length <= linearSearchLimit) {
             return linearSearch(list, searchEl, start, end);
         } else {
             return binarySearch(list, searchEl, start, end);
         }
     }
 
+    this.setCompareFunc = function (cmprFunc) {
+        compareFunc = cmprFunc;
+    }
+
+    this.setOptions = function (options) {
+        init(options);
+    }
+
     function linearSearch(list, searchEl, start, end) {
-        if(list.length === 0) return null;
-        if(!start) start = 0;
-        if(!end) end = list.length -1;
+        if (list.length === 0) return null;
+        if (!start) start = 0;
+        if (!end) end = list.length - 1;
         var compare = null;
-        for(var i = start; i <= end; i++){
+        for (var i = start; i <= end; i++) {
             compare = compareFunc(searchEl, list[i]);
-            if(compare <= 0) {
+            if (compare <= 0) {
                 return {
                     index: i,
                     el: list[i],
@@ -77,8 +92,8 @@ var BinarySearch = function (options) {
         var middleIndex = null;
         var startIndex = 0;
         var endIndex = list.length - 1;
-        if(start) startIndex = start;
-        if(end) endIndex = end;
+        if (start) startIndex = start;
+        if (end) endIndex = end;
         var orderCheck = null;
 
         while (endIndex > startIndex) {
@@ -102,7 +117,7 @@ var BinarySearch = function (options) {
             orderCheck = compareFunc(searchEl, list[startIndex]);
             if (orderCheck > 0) {
                 index = startIndex + 1;
-            } else if(orderCheck < 0){
+            } else if (orderCheck < 0) {
                 index = startIndex;
             } else { // orderCheck = 0
                 index = startIndex;
@@ -118,6 +133,8 @@ var BinarySearch = function (options) {
             equal: equality
         };
     }
+
+    init(options);
 };
 
 
@@ -133,6 +150,3 @@ var BinarySearch = function (options) {
 
 module.exports = BinarySearch; // node export (then you import with require)
 //export default binarySearch;  //es6 export statement (then you import with the import statement)  [comment and incoment following your environment, and what you prefere]
-
-
-
