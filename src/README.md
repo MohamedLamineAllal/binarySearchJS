@@ -3,7 +3,7 @@ Binary search on arrays, for all cases, finding something, or finding a position
 
 This class offer configuration, so you can create multiple binarySearch object instances, with different configuration (like having two object each one using a different compare function). It allow you to do a quick search following your configuration. Do a binary search on a list, and return first element where the searched Element is smaller or equal, (we have an ordered list, equality mostly when we want to search for an existing element following a certain creteria (ex, object ordred by there id), And the no equality if we want to insert the searched element there, it will be the right ordered place). (you define your order function) (if you don't then it will default to the normal comparison operator < > 0)
 
-NOTE: By default if the list is too short (bellow the linearSearchLimit), a linear search is used in place of a binary search, because in such a state a linear search perform better, we are defaulting the limit to 10 elements. You can change that in the configuration.
+**NOTE:** By default if the list is too short (bellow the linearSearchLimit), a linear search is used in place of a binary search, because in such a state a linear search perform better, we are defaulting the limit to 10 elements. You can change that in the configuration.
 
 The **compareFunc** should return 0 if the elements are equal, return a positive number if the the first element is bigger then second, and a negative number if it's the other way.    note that the check function take two parameter that refer to the two elements being compared.
 
