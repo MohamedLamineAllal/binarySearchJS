@@ -1,7 +1,7 @@
 # binarySearchJS
 Binary search on arrays, for all cases, finding something, or finding a position to insert a new element in an ordered list, you can do all, by defining your own comparaison function. Give it a look, and see the test example.
 
-This class offer configuration, so you can create a binarySearch object instance, that allow you to do a quick search following your configuration. Do a binary search on a list, and return first element where the searched Element is smaller or equal, (we have an ordered list, equality mostly when we want to search for an existing element following a certain creteria (ex, object ordred by there id), And the no equality if we want to insert the searched element there, it will be the right ordered place). (you define your order function) (if you don't then it will default to the normal comparison operator < > 0)
+This class offer configuration, so you can create multiple binarySearch object instances, with different configuration (like having two object each one using a different compare function). It allow you to do a quick search following your configuration. Do a binary search on a list, and return first element where the searched Element is smaller or equal, (we have an ordered list, equality mostly when we want to search for an existing element following a certain creteria (ex, object ordred by there id), And the no equality if we want to insert the searched element there, it will be the right ordered place). (you define your order function) (if you don't then it will default to the normal comparison operator < > 0)
 
 NOTE: By default if the list is too short (bellow the linearSearchLimit), a linear search is used in place of a binary search, because in such a state a linear search perform better, we are defaulting the limit to 10 elements. You can change that in the configuration.
 
@@ -23,6 +23,8 @@ Configuration options: (it's an object with the following properties)
     compareFunc: ,// comparison function (used for the search)
     linearSearchLimit; , // integer: represent the number of list elements from where if bellow we use linearSearch (in place of binary)
     forceBinary: // force the use of binary search, even if it's for the cases where it default to linearSearch
+
+    // more may come ...
 }
 ```
 
@@ -34,15 +36,25 @@ If you don't precise an option, then the default value will be used.
 
 ```javascript 
 let bs = new BinarySearch({
-
+    compareFunc: function (searchEl, listEl) {
+        // your comparison logic here (return 0 pos integer, or negative, as explained above)
+    },
+    linearSearchLimit: 20, // you can not precise this parameter (will default to 10 if not)
+    forceBinary: false // by default false (if true, then no linearSearch Will be done in any situation)
 });
+
+// here we get our object let search for something
+
+let result = bs.search(list, searchEl);
+
+// it's as simple as that
 
 ```
 
 
 
 ## Here an example:
-So you see it in action, if you like to run the example, change the directories to the one on your config, and for searchPaths change them, according to a relevent testing. (the comparaison here is following the `localeCompare` string function [strings case insensitive comparaison]).
+So that you see it in action, if you like to run the example, change the directories to the one on your config, and for searchPaths change them, according to a relevent testing. (the comparaison here is following the `localeCompare` string function [strings case insensitive comparaison]).
 ```javascript
 // Notice you need to changet the paths to adapt that test to your host.
 
@@ -86,4 +98,4 @@ fs.readdir(path, function(err, names) {
 
 ```
 
-You can copy past the function to use it, or use an import methode, depending on what suite you better and your environement. (you may need to add the statement for the import mechanism).
+You can copy past the Class to use it, or use an import methode, depending on what suite you better and your environement. (you may need to add the statement for the import mechanism).
