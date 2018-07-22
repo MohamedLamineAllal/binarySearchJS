@@ -97,11 +97,16 @@ var BinarySearch = function (options) {
             }
         }
         var index;
+        var equality = false;
         if (startIndex === endIndex) { // case where at the end only 3 were left or there where two, and the search element was bigger then the first el. (note that if only two left, the middleIndex will be allways of the first el)
-            if (compareFunc(searchEl, list[startIndex]) > 0) {
+            orderCheck = compareFunc(searchEl, list[startIndex]);
+            if (orderCheck > 0) {
                 index = startIndex + 1;
-            } else {
+            } else if(orderCheck < 0){
                 index = startIndex;
+            } else { // orderCheck = 0
+                index = startIndex;
+                equality = true;
             }
         } else { // here startIndex > endIndex and startIndex < middleIndex
             index = middleIndex; /// there is only two el, and startIndex = middleIndex, and searchEl < list[middleIndex] (because endIndex get to move)
@@ -110,7 +115,7 @@ var BinarySearch = function (options) {
         return {
             index: index,
             el: list[index],
-            equal: false
+            equal: equality
         };
     }
 };

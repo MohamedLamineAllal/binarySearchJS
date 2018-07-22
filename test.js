@@ -5,7 +5,7 @@ const fs = require("fs");
 const PATH = require("path");
 
 let path = "/home/coderhero/Documents/coderhero/Dev/git";
-let searchPaths = [`${path}/binarySearch`, `${path}/edream`, `${path}/ramadanC`, `${path}/ywadi`]; // the last path show that it handle well when the element is past the last element of the list
+let searchPaths = [`${path}/binarySearch`, `${path}/binarySearchJS`, `${path}/edream`, `${path}/ramadanC`, `${path}/ywadi`]; // the last path show that it handle well when the element is past the last element of the list
 
 function compareStringsLocale(a, b) {
     return a.localeCompare(b);
@@ -13,7 +13,8 @@ function compareStringsLocale(a, b) {
 
 let bs = new BinarySearch({  // <===============
     compareFunc: compareStringsLocale,
-    linearSearchLimit: 20
+    //linearSearchLimit: 20,
+    forceBinary: true
 });
 
 fs.readdir(path, function(err, names) {
