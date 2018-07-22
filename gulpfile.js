@@ -10,6 +10,9 @@ gulp.task("watch", function () {
     watch('./src/README.md', function () {
         gulp.start("buildREADME");
     });
+    watch('./binarySearch.js', function () {
+        gulp.start("buildREADME");
+    });
     console.log("Watch started!");
 });
 
@@ -20,7 +23,10 @@ gulp.task("buildREADME", function () {
     }, 500);
     gulp.src("./src/README.md")
     .pipe(include())
-    .on('error', console.log)
+    .on('error', function (err) {
+        console.log(err);
+        clearInterval(ih);
+    })
     .pipe(gulp.dest("./"))
     .on("end", function () {
         clearInterval(ih);

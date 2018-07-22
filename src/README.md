@@ -76,3 +76,12 @@ So that you see it in action, if you like to run the example, change the directo
 ```
 
 You can copy past the Class to use it, or use an import methode, depending on what suite you better and your environement. (you may need to add the statement for the import mechanism).
+
+
+## Here a preview of binarySearch.js file 
+Case you want to copy past the class, or see the implementation, just quickly.
+
+```javascript
+//= include ../binarySearch.js
+
+```
